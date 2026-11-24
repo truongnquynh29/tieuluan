@@ -1,443 +1,388 @@
-# PROMPT THI CÔNG — GOUACHE STORYBOOK: TẠO TRANH TRƯỚC, DỰNG SÁCH LẬT SAU
+# LỆNH THI CÔNG CHO MUSE — GOUACHE STORYBOOK THEO ẢNH THAM CHIẾU
 
-> **Dành cho:** Muse AI có quyền đọc/ghi repository GitHub  
 > **Repository:** https://github.com/truongnquynh29/tieuluan  
 > **Branch bắt buộc:** `muse/storybook-03-gouache`  
-> **Truyện:** Người Gác Đền Không Gian Số: Hành trình trưởng thành trên mạng của Minh và An  
-> **Phong cách duy nhất:** 03 — Gouache Storybook  
-> **Mục tiêu:** Tạo tranh minh họa thật cho từng trang ở trang trái, tạo background trang phải thành PDF riêng, sau đó dựng một web đọc truyện có cuốn sách mở ở chính giữa màn hình và lật trang như sách thật.
+> **Phong cách:** Gouache Storybook theo ảnh tham chiếu do người dùng cung cấp trong cuộc trò chuyện  
+> **Đầu ra bắt buộc:** đúng 02 file PDF — một PDF 28 trang tranh minh họa bên trái, một PDF background dùng chung cho trang bên phải  
+> **Phạm vi:** CHỈ sản xuất hình ảnh và hai file PDF. KHÔNG làm website, HTML/CSS/JavaScript, hiệu ứng lật trang, animation hoặc tương tác.
 
 ---
 
-## 0. ĐỌC LỆNH VÀ NGUYÊN TẮC ƯU TIÊN
+## 1. NHIỆM VỤ CỦA BẠN — ĐỌC KỸ TRƯỚC KHI LÀM
 
-Bạn phải thực hiện công việc trực tiếp trên repository, không chỉ trả lời bằng kế hoạch.
+Bạn là AI Illustration Production Agent. Hãy tiếp quản nội dung truyện đã có và thực hiện đúng phần việc sản xuất hình ảnh.
 
-Đọc trước:
+Người dùng đã cung cấp một ảnh mẫu Gouache Storybook. Đây là **nguồn tham chiếu mỹ thuật quan trọng nhất** cho nhiệm vụ này. Hãy làm theo mô tả hình ảnh và bảng màu được ghi chi tiết ở Mục 3, không tự thay bằng phong cách gouache chung chung trong thư viện của bạn.
+
+### Người dùng yêu cầu chính xác
+1. Tạo ảnh minh họa cho từng trang truyện, theo đúng nội dung thuyết minh đã có.
+2. Tranh được dùng ở **trang bên trái** của một cuốn sách mở.
+3. Mỗi tranh tương ứng đúng một trang/lời thuyết minh có cùng page_id.
+4. Sau khi tạo đủ tranh, ghép tất cả thành **một PDF duy nhất gồm 28 trang tranh**.
+5. Tạo **một background trống dùng chung cho toàn bộ các trang bên phải**, rồi xuất thành **một PDF riêng chỉ có 01 trang background mẫu**. Background này sẽ được bên phát triển website tái sử dụng cho cả 28 trang.
+6. Không viết thêm thoại, không viết lại lời dẫn, không thêm chữ vào tranh hoặc background.
+7. Không dựng website, không viết HTML/CSS/JS, không làm hiệu ứng chuyển trang, không làm hiệu ứng lật sách, không tạo nút hay logic tương tác. Đó là công việc của agent khác.
+
+**Chỉ tập trung hoàn thành hai PDF và các file PNG nguồn cần thiết để kiểm tra/chỉnh sửa PDF.**
+
+---
+
+## 2. ĐỌC NGUỒN NỘI DUNG TRƯỚC KHI SINH ẢNH
+
+Làm việc trên branch `muse/storybook-03-gouache`. Đọc các file sau:
+
 1. `AGENTS.md`
-2. `07_Agent_Prompts_Va_Cong_Cu/STORY_CREATION_WORKFLOW.md`
+2. `07_Agent_Prompts_Va_Cong_Cu/CHARACTER_BIBLE.md`
 3. `07_Agent_Prompts_Va_Cong_Cu/VISUAL_STYLE_BIBLE.md`
-4. `07_Agent_Prompts_Va_Cong_Cu/CHARACTER_BIBLE.md`
-5. `07_Agent_Prompts_Va_Cong_Cu/STORY_PAGE_TEMPLATE.md`
-6. `08_Muse_Storybook_Prompts/PROMPT_03_GOUACHE_STORYBOOK.md`
-7. `09_Storybook_Outputs/gouache/STORY_PAGES.md`
-8. `09_Storybook_Outputs/gouache/IMAGE_PROMPTS.md`
-9. `09_Storybook_Outputs/gouache/CHARACTER_STYLE_SHEETS.md`
-10. `09_Storybook_Outputs/gouache/VISUAL_STYLE_OVERRIDE.md`
-11. `09_Storybook_Outputs/gouache/ASSET_MANIFEST.md`
-12. `09_Storybook_Outputs/gouache/QA_REPORT.md`
-13. `05_Web_Truyen_Tuong_Tac/index.html`, `css/style.css`, `js/book.js`, `js/story_data.js`
+4. `08_Muse_Storybook_Prompts/PROMPT_03_GOUACHE_STORYBOOK.md`
+5. `09_Storybook_Outputs/gouache/STORY_PAGES.md`
+6. `09_Storybook_Outputs/gouache/IMAGE_PROMPTS.md`
+7. `09_Storybook_Outputs/gouache/CHARACTER_STYLE_SHEETS.md`
+8. `09_Storybook_Outputs/gouache/ASSET_MANIFEST.md`
+9. `09_Storybook_Outputs/gouache/CONTENT_AUDIT.md`
+10. `09_Storybook_Outputs/gouache/QA_REPORT.md`
 
-### Yêu cầu của người dùng — phải xử lý đủ
-Bản trình chiếu trước đây có các lỗi:
-- Font chữ nhỏ, nhìn như văn bản Word, không có cảm giác chữ được thiết kế cho sách truyện.
-- Hình minh họa người/nhân vật đang hành động thực tế chưa có hoặc chưa được đưa vào trang.
-- Cách chuyển trang giống slide trình chiếu, không tạo cảm giác đang đọc một cuốn sách online.
-- Người dùng muốn một cuốn sách đang mở ở giữa trang web: trang trái là tranh truyện do AI tạo, trang phải là phần thuyết minh tương ứng trên nền giấy/background đẹp.
-- Phải làm tranh bên trái trước. Background trang bên phải làm riêng, không được để nội dung chữ dính vào background PDF.
-- Cần hai PDF độc lập: PDF chứa toàn bộ tranh truyện theo thứ tự trang và PDF chứa background trống của các trang bên phải.
+Dùng `STORY_PAGES.md` làm nguồn để hiểu chính xác cảnh nào cần vẽ ở mỗi trang. Dùng lời dẫn để hiểu bối cảnh, diễn biến và cảm xúc, **nhưng không chép lời dẫn hoặc thoại vào ảnh**.
 
-**Thứ tự thi công bắt buộc:**  
-**Kiểm tra nội dung/nhân vật → tạo character reference → tạo đủ 28 tranh trang trái → xuất PDF tranh → tạo 28 background trang phải → xuất PDF background → dựng HTML sách lật → kiểm tra và push.**
+### Khóa nội dung
+- Giữ đúng 4 chương và 28 page_id đang có.
+- Không tự viết lại lời dẫn, không biên tập thoại, không sáng tác thêm tình tiết.
+- Không đổi tên, tuổi, vai trò, quan hệ hoặc hành động của nhân vật.
+- Không bỏ trang nhánh An toàn/Khám phá hoặc trang kết thúc.
+- Không gộp nhiều page_id vào một ảnh.
+- Không tạo một câu chuyện mới chỉ vì muốn ảnh đẹp hơn.
 
-Không bắt đầu làm giao diện HTML trước khi đã có đủ tranh trang trái và hai PDF thật sự được tạo ra, kiểm tra được số trang.
+### Danh sách 28 trang theo đúng thứ tự PDF
+- Chương 1: `CH01-P001`, `CH01-P002`, `CH01-P003`, `CH01-P004`, `CH01-P005`, `CH01-P006`.
+- Chương 2: `CH02-P001`, `CH02-P002`, `CH02-P003`, `CH02-P004`, `CH02-P005`, `CH02-P006`.
+- Chương 3: `CH03-P001`, `CH03-P002`, `CH03-P003`, `CH03-P004`, `CH03-P005`, `CH03-P006`.
+- Chương 4: `CH04-P001` đến `CH04-P010`.
 
----
-
-## 1. KIỂM TRA HIỆN TRẠNG — KHÔNG TIN MÙ QUÁNG VÀO MANIFEST
-
-Kiểm tra Git tree thực tế của branch `muse/storybook-03-gouache`, không chỉ đọc mô tả trong Markdown.
-
-Các báo cáo hiện có không đồng nhất: README ghi 29 ảnh đã sinh, ASSET_MANIFEST đánh dấu nhiều trang generated, nhưng QA_REPORT lại nói chỉ có cover và các trang còn lại pending. Trong cây file tại thời điểm tạo prompt này, thư mục `09_Storybook_Outputs/gouache/assets/` chỉ có README và chưa thấy các PNG thực tế.
-
-Vì vậy:
-- Kiểm tra file thật trong Git tree và nội dung thư mục, bao gồm cả thư mục con.
-- Chỉ đánh dấu `generated` khi file ảnh nhị phân thực tế tồn tại, mở/đọc được và đúng page_id.
-- Không dùng tên file trong manifest để kết luận ảnh đã tồn tại.
-- Không tạo placeholder, SVG minh họa tạm, emoji, icon, hình vector tượng trưng hoặc ảnh trống để giả làm ảnh AI.
-- Sửa lại README, ASSET_MANIFEST và QA_REPORT cho khớp hiện trạng thật sau khi làm xong.
-
-**Đầu ra kiểm tra:** ghi trạng thái ban đầu vào `PRODUCTION_LOG.md`, nêu rõ có bao nhiêu PNG/PDF thực tế trước khi bắt đầu.
+**Tổng cộng: 28 ảnh nội dung — PDF tranh phải có đúng 28 trang, không thêm trang bìa.**
 
 ---
 
-## 2. KHÓA NỘI DUNG TRUYỆN — TUYỆT ĐỐI KHÔNG VIẾT LẠI
+## 3. PHÂN TÍCH ẢNH THAM CHIẾU — PHONG CÁCH PHẢI BÁM SÁT
 
-Nguồn nội dung chuẩn:
-- `09_Storybook_Outputs/gouache/STORY_PAGES.md`
-- `04_Kich_Ban_Truyen_Tuong_Tac/KICH_BAN_TONG_THE.md`
-- Bốn file kịch bản chương trong `04_Kich_Ban_Truyen_Tuong_Tac/`
-- `05_Web_Truyen_Tuong_Tac/js/story_data.js`
+Ảnh mẫu người dùng cung cấp là một tranh minh họa sách truyện có cảm giác vẽ tay bằng gouache/matte paint. Hãy tái hiện **ngôn ngữ tạo hình, chất liệu, độ mềm, cách phối sáng và bảng màu** của mẫu, không sao chép nguyên xi nhân vật hoặc bố cục cụ thể trong ảnh.
 
-Giữ nguyên:
-- Tên truyện, nhân vật, tính cách, quan hệ, bối cảnh và sự kiện.
-- Đủ **4 chương, 28 page_id** theo đúng thứ tự trong STORY_PAGES.md.
-- Toàn bộ lời dẫn tiếng Việt, các trang quyết định, lựa chọn An toàn/Khám phá, hệ quả, chỉ số CSS/DES, điểm số, nội dung phản tư và bốn kết thúc.
-- Không cắt trang, không gộp hai page_id thành một ảnh, không tạo thêm một cốt truyện khác.
+### 3.1. Chất liệu và nét vẽ
+- Digital gouache / hand-painted storybook illustration.
+- Mảng màu gouache đục, matte, có độ phủ và chiều sâu; không bóng nhựa.
+- Nét cọ nhìn thấy được nhưng mềm, tự nhiên, có chủ ý; một số cạnh hình hơi loang/không tuyệt đối sắc như vector.
+- Có lớp màu chồng, vệt cọ ngắn và texture giấy/vải vẽ rất nhẹ.
+- Hình khối được dựng bằng mảng màu; tránh viền đen dày bao quanh tất cả vật thể.
+- Đường viền chỉ xuất hiện có chọn lọc ở tóc, mắt, trang phục và các điểm cần nhấn.
+- Viền nhân vật mềm, chuyển màu êm ở da, tóc và nền; vẫn phải đủ nét để nhận diện hành động.
+- Không dùng render 3D, CGI, photorealism, vector phẳng, anime/manga, pixel art, watercolor loang nhòe hoặc comic outline.
 
-Danh sách page_id chuẩn:
-- Chương 1: `CH01-P001` đến `CH01-P006`
-- Chương 2: `CH02-P001` đến `CH02-P006`
-- Chương 3: `CH03-P001` đến `CH03-P006`
-- Chương 4: `CH04-P001` đến `CH04-P010`
+### 3.2. Cách tạo hình nhân vật
+- Nhân vật có gương mặt tròn mềm vừa phải, mắt sáng và biểu cảm rõ, mũi/miệng nhỏ gọn, má có sắc hồng ấm nhẹ.
+- Tóc được chia thành từng lọn/mảng lớn có vệt sáng và bóng bằng nét cọ, không dùng từng sợi tóc siêu thực.
+- Dáng người tự nhiên, cử chỉ thân thiện và dễ đọc; bàn tay, tư thế cầm điện thoại/laptop/sách phải đúng hành động.
+- Cảm xúc ấm áp, hồn nhiên, gần gũi; ưu tiên vẻ đẹp minh họa sách truyện hơn vẻ đẹp ảnh chụp.
+- Có chiều sâu không gian: nhân vật chính rõ, nhân vật phụ và bối cảnh lùi nhẹ hơn.
 
-Tổng cộng: **28 tranh truyện** + **1 ảnh bìa riêng** (nếu cần làm mới bìa).
+**LƯU Ý CỰC KỲ QUAN TRỌNG VỀ ĐỘ TUỔI:** ảnh tham chiếu có nhân vật tạo hình rất trẻ. Truyện này dành cho học sinh lớp 11, nên Minh, An, Hoàng, Chi phải vẫn nhận ra là học sinh THPT khoảng 16–17 tuổi. Hãy giữ chất liệu, nét cọ, mắt biểu cảm và sắc độ của mẫu nhưng điều chỉnh tỷ lệ cơ thể, chiều cao, khuôn mặt, trang phục và thần thái cho tuổi thiếu niên. **Không biến học sinh lớp 11 thành trẻ mẫu giáo/tiểu học; không chibi hóa quá mức.**
 
-Mỗi trang có một cảnh minh họa riêng và phần lời dẫn tương ứng. Lời dẫn phải hiển thị ở trang bên phải của đúng tranh đó. Không đưa nội dung thuyết minh vào trong hình ảnh.
+### 3.3. Bảng màu lấy cảm hứng từ ảnh mẫu
+Các mã dưới đây là màu tham chiếu gần đúng được lấy từ ảnh người dùng cung cấp. Hãy dùng chúng như palette nhất quán xuyên suốt cuốn truyện, không coi là các mã bắt buộc phải xuất hiện đồng thời trong mọi ảnh.
 
-Nếu Markdown và story_data.js có chỗ không khớp, ghi nhận trong CONTENT_AUDIT.md; không tự ý sửa kiến thức hoặc logic tương tác. Nội dung chữ trong reader phải bám STORY_PAGES.md đã được xác định làm nguồn trình chiếu cho branch này.
+| Vai trò | Màu tham chiếu | Mã |
+|---|---|---|
+| Nền xanh sage chủ đạo | Dusty sage green | `#7F9990` |
+| Nền sage sáng | Soft sage grey | `#929D91` |
+| Xanh xám nhạt | Muted celadon | `#9EB0A8` |
+| Kem giấy / vùng sáng | Warm ivory | `#F1E5D1` |
+| Kem be trung tính | Oat beige | `#DACEBC` |
+| Vàng đất ấm | Golden ochre | `#DA9A60` |
+| Cam đất | Burnt orange | `#C57D49` |
+| Nâu tóc / gỗ | Warm chestnut | `#784227` |
+| Nâu sáng | Soft umber | `#9F7552` |
+| Nâu than | Warm charcoal | `#3B362E` |
+| Olive xám | Muted olive | `#747768` |
+| Da và má ấm | Peach skin | `#E5B082` |
 
----
+#### Quy tắc dùng màu
+- Ưu tiên xanh sage/xanh xám dịu làm nền xa, không gian lớp học hoặc mảng nền lớn.
+- Dùng kem ngà/ivory cho vùng sáng, giấy, ánh sáng dịu.
+- Dùng vàng đất, ochre và cam đất làm điểm nhấn, ánh nắng, lá cây, đồ vật và chi tiết ấm.
+- Dùng nâu hạt dẻ, nâu gỗ và nâu than cho tóc, bóng đổ, bàn ghế và chi tiết tối.
+- Màu da thiên peach ấm tự nhiên, có sắc hồng phấn rất nhẹ ở má.
+- Giữ tổng thể hơi trầm, dịu, hoài niệm và ấm áp; không dùng neon, cyan điện tử, tím neon, xanh dạ quang hoặc màu bão hòa gắt.
+- Không biến ảnh thành đơn sắc. Mỗi ảnh vẫn cần phân biệt rõ da, tóc, đồng phục, đạo cụ và môi trường.
 
-## 3. PHONG CÁCH MINH HỌA — GOUACHE STORYBOOK
+### 3.4. Ánh sáng và không khí
+- Ánh sáng tán xạ, dịu, ấm; có vùng sáng kem lan nhẹ ở phía sau hoặc trên nhân vật.
+- Bóng đổ mềm, không đen đặc hoặc có cạnh cứng như ảnh 3D.
+- Có thể dùng ánh nắng vàng dịu, bụi sáng nhẹ hoặc lớp nền mờ để tạo cảm giác kỳ diệu của sách truyện.
+- Không khí thân thiện, thơ mộng và giàu cảm xúc, nhưng bối cảnh vẫn phải nhận ra là đời sống học đường hiện đại.
 
-Dùng đúng phong cách 03, không pha sang manga, anime, vector, watercolor loang mạnh hoặc 3D clay.
-
-### Style anchor bắt buộc
-“Minh họa truyện sách thiếu niên bằng chất liệu gouache kỹ thuật số; mảng màu đục matte, brush shape mềm nhưng cạnh rõ, bề mặt sơn mịn có chút dấu cọ thủ công tinh tế; hình khối giàu cá tính, nhân vật có gương mặt và cảm xúc tự nhiên, ánh sáng ấm, chiều sâu tạo bởi nhiều lớp màu; cảm giác như một cuốn sách truyện minh họa được họa sĩ vẽ và tô màu thủ công, vui vẻ, gần gũi, sinh động, giàu cảm xúc và phù hợp học sinh THPT.”
-
-### Palette gợi ý cố định
-- Cream / warm ivory: nền sáng và ánh sáng.
-- Cobalt blue: nhận diện Minh và chi tiết công nghệ.
-- Fresh teal: nhận diện An.
-- Mustard / sunshine yellow: điểm nhấn Hoàng.
-- Warm coral: cảm xúc và điểm nhấn nhỏ.
-- Deep navy / charcoal: viền và tương phản.
-- Màu da tự nhiên, không bão hòa quá mức.
-
-### Chất lượng minh họa
-- Phải có nhân vật người thật theo tạo hình minh họa (stylized human characters), đang thực hiện hành động rõ ràng: nhìn điện thoại, chỉ vào màn hình, chạy vào phòng, an ủi bạn, ngồi trước máy tính, giơ USB, trao giải, v.v.
-- Biểu cảm đọc được ngay: ngạc nhiên, tò mò, lo lắng, phân vân, hối hận, nhẹ nhõm, vui mừng.
-- Bối cảnh có chi tiết thực tế của đời sống học sinh Việt Nam: lớp học, hành lang, quán trà sữa, phòng máy, sân trường, hội trường.
-- Hành động/đạo cụ phải khớp đúng mô tả của page_id.
-- Không dùng một hình nền chung rồi thay tiêu đề để giả làm 28 tranh khác nhau.
-- Không được chỉ vẽ biểu tượng khiên, điện thoại, laptop hoặc biểu đồ mà thiếu nhân vật và hành động cần kể.
-- Mỗi trang là **một cảnh liên tục, một góc nhìn chính, một tranh duy nhất**.
-
-### Cấm trong ảnh
-Không chữ, không chữ tiếng Việt/tiếng Anh, không tiêu đề, không phụ đề, không nhãn, không URL có thể đọc, không logo, không watermark, không bong bóng thoại, không panel, không collage, không chia khung, không nhiều thời điểm trong một ảnh, không contact sheet.
-
----
-
-## 4. GIAI ĐOẠN 1 — KHÓA NHÂN VẬT VÀ TẠO ẢNH THAM CHIẾU
-
-Trước khi tạo 28 tranh:
-1. Đọc CHARACTER_BIBLE và CHARACTER_STYLE_SHEETS hiện có.
-2. Tạo character reference sheet nhất quán cho từng nhân vật: Minh, An, Hoàng, Chi, CyberFox và Thầy Tuấn.
-3. Mỗi character sheet cần có toàn thân, góc 3/4, góc nghiêng và các biểu cảm chính; đây là tài liệu tham chiếu sản xuất, **không tính vào 28 trang truyện**.
-4. Dùng cùng character reference trong mọi lần sinh ảnh của branch.
-5. Giữ nguyên tuổi học sinh THPT, tóc, dáng, nét mặt, trang phục lõi, phụ kiện và màu nhận diện.
-6. Chi xuất hiện trong Chương 3 và có mô tả trong CHARACTER_STYLE_SHEETS.md; cần giữ đúng mô tả đã có, không tự sáng tác lại ngoại hình.
-7. CyberFox phải giữ hình dạng cáo, màu lông cam/kem, phụ kiện công nghệ và tỷ lệ đầu/thân giống nhau qua mọi trang.
-
-Lưu reference tại:
-`09_Storybook_Outputs/gouache/assets/characters/`
-
-Tạo xong phải mở/kiểm tra các reference trước khi dùng chúng cho hàng loạt ảnh.
+### 3.5. Bố cục và cách kể bằng hình
+- Mỗi ảnh là một khoảnh khắc duy nhất, có hành động chính rõ ràng.
+- Ưu tiên bố cục chân dung/toàn thân vừa đủ, trung cảnh hoặc toàn cảnh có chiều sâu; không cắt mất bàn tay/đạo cụ quan trọng.
+- Nhân vật phải thực sự làm hành động trong nội dung trang: nhìn, chỉ, cầm, chạy, trao, an ủi, phản ứng, thao tác với thiết bị.
+- Không chỉ vẽ biểu tượng trừu tượng, icon, màn hình hoặc vật thể mà thiếu nhân vật khi nội dung yêu cầu nhân vật hành động.
+- Dùng bối cảnh Việt Nam hiện đại: quán trà sữa, phòng máy, lớp học, hành lang, sân trường, hội trường, phòng điều khiển.
+- Không bê nguyên bố cục 2 nhân vật đứng giữa và các bạn nhỏ ở hậu cảnh của ảnh mẫu cho mọi trang. Hãy bám nội dung riêng từng page_id.
 
 ---
 
-## 5. GIAI ĐOẠN 2 — TẠO 28 TRANH MINH HỌA Ở TRANG BÊN TRÁI TRƯỚC
+## 4. CHARACTER CONSISTENCY — GIỮ NHÂN VẬT NHƯ KỊCH BẢN GỐC
 
-Đây là nhiệm vụ ưu tiên số 1. **Chưa dựng HTML, chưa làm background trang phải cho đến khi 28 tranh trang trái đã được tạo và kiểm tra.**
+Dùng `CHARACTER_BIBLE.md` và `CHARACTER_STYLE_SHEETS.md` làm nguồn canon. Các nhân vật chính/phụ hiện có gồm Minh, An, Hoàng, Chi, CyberFox và Thầy Tuấn.
 
-### Quy cách ảnh
-- Mỗi page_id tạo đúng một file ảnh độc lập.
-- Tỷ lệ dọc **4:5**; độ phân giải mục tiêu ít nhất **2400 × 3000 px** hoặc chất lượng tương đương.
-- Định dạng PNG, màu sRGB, không chữ.
-- Mỗi ảnh chỉ mô tả đúng một cảnh; không tạo 28 ảnh vào cùng một canvas.
-- Không tạo contact sheet rồi cắt thành ảnh giả, trừ khi công cụ có quy trình tạo ảnh riêng từng trang thực sự.
-- Phải dùng style anchor gouache và character references đã khóa.
+- Minh: nam sinh lớp 11, 16–17 tuổi; tóc đen ngắn hơi rối, dáng năng động; nhận diện cobalt/blue theo Character Bible.
+- An: nữ sinh lớp 11, 16–17 tuổi; tóc đen ngang vai và kẹp tóc teal nhỏ bên trái; nhận diện sage/teal.
+- Hoàng: nam sinh lớp 11, 16–17 tuổi; tóc đen ngắn hơi gợn, dáng hoạt bát; nhận diện vàng đất/coral.
+- Chi: nữ sinh lớp 11A; giữ mô tả đã có trong CHARACTER_STYLE_SHEETS.md và CONTENT_AUDIT.md, không tự đổi thành nhân vật khác.
+- CyberFox: cáo hoạt hình cố vấn không gian số; giữ nguyên hình dạng tai, mõm, đuôi, tỷ lệ và phụ kiện qua mọi trang.
+- Thầy Tuấn: giáo viên Tin học; giữ kính, kiểu tóc, trang phục và dáng vẻ thân thiện đã mô tả.
 
-### Đường dẫn bắt buộc
+Trước khi sinh hàng loạt:
+1. Chuẩn hóa ảnh tham chiếu nhân vật theo phong cách gouache và độ tuổi THPT.
+2. Lưu các reference trong `09_Storybook_Outputs/gouache/assets/characters/`.
+3. Sử dụng reference nhất quán cho 28 ảnh.
+4. Không thay đổi khuôn mặt, kiểu tóc lõi, trang phục cơ bản, phụ kiện nhận diện hoặc màu nhận diện giữa các trang.
+
+Character sheets chỉ là tài liệu nội bộ để giữ continuity. **Không đưa character sheets vào PDF tranh 28 trang.**
+
+---
+
+## 5. GIAI ĐOẠN A — TẠO 28 TRANH MINH HỌA TRANG TRÁI
+
+Đây là công việc chính và phải làm trước background.
+
+### 5.1. Định dạng mỗi tranh
+- Tỷ lệ: **4:5 dọc**, phù hợp một trang sách bên trái.
+- Độ phân giải mục tiêu: tối thiểu 2000 × 2500 px; khuyến nghị 2400 × 3000 px nếu công cụ hỗ trợ.
+- Định dạng nguồn: PNG, sRGB.
+- Một page_id = một ảnh độc lập = một cảnh duy nhất.
+- Không tạo ảnh ghép, comic strip, nhiều panel, split screen, collage, montage hoặc contact sheet.
+- Không đặt lời dẫn, thoại, balloon, chữ tiêu đề, chữ trang trí, nhãn, số trang, logo hoặc watermark vào ảnh.
+- Không để viền đen kiểu letterbox ở trên/dưới; ảnh phải lấp đúng khung trang dọc.
+- Không crop mất đầu, tay, đạo cụ hoặc hành động chủ đạo.
+
+### 5.2. Đường dẫn và tên file
+Lưu đúng tên theo page_id:
 `09_Storybook_Outputs/gouache/assets/pages/CH01-P001.png`  
 `09_Storybook_Outputs/gouache/assets/pages/CH01-P002.png`  
 ...  
 `09_Storybook_Outputs/gouache/assets/pages/CH04-P010.png`
 
-Tên file phải khớp đúng page_id; không dùng tên chung như image1.png hoặc final2.png.
+Không dùng tên chung kiểu image1.png, final.png hoặc page-new.png.
 
-### Quy trình sinh
-1. Dùng IMAGE_PROMPTS.md làm cơ sở, đối chiếu lại mô tả trang trong STORY_PAGES.md.
-2. Sinh thử riêng `CH01-P001` và kiểm tra xem nhân vật, chất liệu gouache, ánh sáng và bố cục đã đúng chưa.
-3. Dùng ảnh tham chiếu đã khóa để tiếp tục sinh từng trang còn lại.
-4. Không thay đổi style anchor giữa chừng.
-5. Mỗi ảnh sau khi sinh phải được kiểm tra trước khi đánh dấu generated.
-6. Đặc biệt kiểm tra trang lựa chọn, trang phản tư và các trang kết thúc: vẫn phải có nhân vật/hành động phù hợp, không biến thành infographic.
-7. Nếu một ảnh sai nhân vật, sai cảnh, sai chất liệu hoặc có chữ/panel thì tạo lại.
+### 5.3. Quy trình tạo ảnh
+1. Đọc mô tả cảnh của CH01-P001 trong STORY_PAGES.md.
+2. Dùng phong cách và palette tại Mục 3 để tạo tranh có nhân vật đang hành động đúng cảnh.
+3. Kiểm tra ảnh đầu tiên: đúng độ tuổi, đúng nhân vật, đúng hành động, đúng gouache, đúng palette.
+4. Nếu đạt thì khóa prompt/style/character reference và tiếp tục tạo từng page_id còn lại.
+5. Từng ảnh phải được kiểm tra với lời dẫn và mô tả cảnh của đúng trang.
+6. Khi cần lựa chọn SAFE/EXPLORE, thể hiện sự phân vân qua biểu cảm, tư thế và đạo cụ trong một cảnh duy nhất; không vẽ hai phương án thành hai panel.
+7. Trang phản tư vẫn minh họa nhân vật/cố vấn trong bối cảnh truyện; không biến thành trang slide kiến thức.
+8. Các trang kết thúc phải là tranh kể chuyện có nhân vật và cảm xúc, không phải infographic kết quả.
+9. Nếu có ảnh sai cảnh, sai người, sai màu hoặc lỗi giải phẫu đáng kể, hãy tạo lại trước khi đưa vào PDF.
 
-### Bản đồ ánh xạ
-Cập nhật `ASSET_MANIFEST.md` theo bảng:
-`page_id | narration_page_id | image_asset_id | file | dimensions | status | QA`.
+### 5.4. Map hình ảnh với lời dẫn
+Tạo hoặc cập nhật `ASSET_MANIFEST.md` với bảng:
+`page_id | narration title | image_asset_id | image file | dimensions | status | QA`.
 
-**Gate 1 — Chỉ được qua khi:**
-- Có đủ 28 file PNG thật, mở/đọc được.
-- Mỗi page_id có đúng một ảnh.
-- Không có ảnh lặp, placeholder, file rỗng hoặc ảnh sai trang.
-- Đã kiểm tra ít nhất 1 ảnh mở đầu, 1 ảnh quyết định, 1 ảnh hệ quả và 1 ảnh kết thúc; tốt nhất kiểm tra cả 28 ảnh.
-- Đã ghi rõ số ảnh thực tế trong PRODUCTION_LOG.md.
+Lời dẫn lấy từ STORY_PAGES.md để biết hình cần kể gì. Không sửa lời dẫn và không yêu cầu model vẽ chữ trong ảnh.
 
----
-
-## 6. GIAI ĐOẠN 3 — GHÉP PDF CHỈ CHỨA TRANH TRANG TRÁI
-
-Sau khi Gate 1 đạt, dùng chính 28 PNG đã sinh để tạo **một PDF ảnh truyện**.
-
-### Tên file
-`09_Storybook_Outputs/gouache/pdf/Gouache_Illustrations_28_Pages.pdf`
-
-### Quy tắc PDF
-- Đúng **28 trang PDF**, không tính bìa.
-- Thứ tự trang đúng theo page_id: CH01-P001 → ... → CH04-P010.
-- Một PDF page chứa đúng một tranh minh họa tương ứng.
-- Không có lời dẫn, tiêu đề, số trang, chú thích hoặc chữ chèn lên tranh.
-- Không ghép nhiều ảnh trên cùng một PDF page.
-- Giữ đúng tỷ lệ và chất lượng ảnh gốc, không kéo méo.
-- Kích thước trang PDF nhất quán theo tỷ lệ 4:5 (ví dụ 8 × 10 inch hoặc kích thước tương đương).
-- Nếu cần thêm bìa, lưu ảnh bìa riêng `assets/cover.png`; không làm sai số trang 28 của PDF tranh nội dung.
-
-Sau khi xuất:
-- Mở PDF và kiểm tra trang đầu, vài trang giữa, trang cuối.
-- Kiểm tra số trang PDF bằng đúng 28.
-- Đối chiếu trang 1 và trang 28 với đúng file PNG tương ứng.
-- Không báo hoàn thành nếu chỉ có IMAGE_PROMPTS.md mà chưa có file PDF nhị phân thật.
-
-**Gate 2 — Có PDF thật, mở được và đúng 28 trang.**
+### 5.5. Gate A — điều kiện được xuất PDF
+Chỉ chuyển sang bước ghép PDF khi:
+- [ ] Đủ 28 file PNG thực tế, không phải placeholder.
+- [ ] Đúng 28 page_id, đúng thứ tự.
+- [ ] 28 ảnh đều mở được, không rỗng, không hỏng.
+- [ ] Mỗi ảnh có đúng một cảnh, một hành động chính.
+- [ ] Nhân vật nhận diện thống nhất.
+- [ ] Style gouache và bảng màu thống nhất.
+- [ ] Không có chữ/thoại/panel/collage/letterbox trong ảnh.
 
 ---
 
-## 7. GIAI ĐOẠN 4 — TẠO BACKGROUND TRANG BÊN PHẢI VÀ PDF RIÊNG
+## 6. GIAI ĐOẠN B — GHÉP PDF TRANH MINH HỌA BÊN TRÁI
 
-Chỉ bắt đầu sau khi PDF tranh trái đã hoàn thành.
+Sau khi Gate A đạt, ghép đúng 28 PNG thành một PDF.
 
-Người dùng muốn trang phải là nền/background trang sách để phần thuyết minh được đặt lên trên bằng HTML. Vì vậy **PDF background không được chứa lời dẫn, tiêu đề, số trang hoặc bất kỳ nội dung chữ nào**.
+### File bắt buộc
+`09_Storybook_Outputs/gouache/pdf/Gouache_Left_Illustrations_28_Pages.pdf`
 
-### Thiết kế background trang phải
-- Nền giấy kem/ngà ấm, bề mặt giấy mịn có texture rất nhẹ.
-- Gouache được thể hiện qua vài mảng màu wash mềm ở rìa trang; không lấn vào vùng chữ.
-- Có thể có viền trang mảnh, góc trang trang trí nhỏ hoặc họa tiết thực vật/công nghệ rất nhẹ, nhưng phải tinh tế.
-- Chừa vùng trung tâm rộng, sáng, sạch để chữ tiếng Việt đặt lên dễ đọc.
-- Không có hình nhân vật, không có tranh minh họa, không có icon lớn, không có watermark.
-- Một background thống nhất cho toàn cuốn; chỉ cho phép biến đổi rất nhỏ về vệt màu/hoa văn để các trang không bị máy móc, nhưng tuyệt đối không đổi layout và độ tương phản.
-- Background phải làm nền cho chữ chứ không cạnh tranh với chữ.
-- Tạo theo tỷ lệ 4:5 tương ứng trang phải.
-
-### File PNG phục vụ HTML
-Lưu từng background:
-`09_Storybook_Outputs/gouache/assets/right-backgrounds/CH01-P001.png`  
-...  
-`09_Storybook_Outputs/gouache/assets/right-backgrounds/CH04-P010.png`
-
-Mỗi ảnh background tương ứng một page_id; có thể dùng chung thiết kế nền nhưng phải có file ánh xạ rõ ràng. HTML sẽ dùng PNG background để hiển thị ổn định, không phụ thuộc việc trình duyệt nhúng trực tiếp một trang PDF.
-
-### PDF background riêng
-Tên file:
-`09_Storybook_Outputs/gouache/pdf/Gouache_Right_Page_Backgrounds_28_Pages.pdf`
-
-Quy tắc:
-- Đúng 28 trang.
-- Mỗi trang là một background trắng chữ, không có narration.
-- Trang PDF thứ n phải tương ứng background của page_id thứ n.
-- Cùng tỷ lệ 4:5 và chất lượng cao.
-- Không gộp với PDF tranh minh họa.
-- Kiểm tra PDF thật sự mở được và có đủ 28 trang.
-
-**Gate 3 — Có 28 background PNG và một PDF background riêng đúng 28 trang.**
-
----
-
-## 8. GIAI ĐOẠN 5 — THIẾT KẾ WEBSITE THÀNH MỘT CUỐN SÁCH MỞ Ở GIỮA MÀN HÌNH
-
-Sau khi có đủ:
-- 28 tranh bên trái;
-- `Gouache_Illustrations_28_Pages.pdf`;
-- 28 background bên phải;
-- `Gouache_Right_Page_Backgrounds_28_Pages.pdf`;
-
-mới dựng giao diện đọc truyện.
-
-### Entry point
-Tạo một trang HTML chính:
-`09_Storybook_Outputs/gouache/reader/index.html`
-
-Có thể tách CSS/JS thành các file đi kèm để dễ bảo trì, nhưng đây phải là **một trang web đọc truyện có một entry point HTML duy nhất**. Tất cả ảnh/background/PDF/font phải dùng đường dẫn local trong repository. Không phụ thuộc CDN khi có thể tránh, để có thể chạy offline.
-
-### Bố cục trung tâm
-- Cuốn sách đang mở nằm chính giữa viewport, là thành phần nổi bật nhất.
-- Hai trang trái/phải nằm cạnh nhau như một cuốn sách giấy thật.
-- **Trang trái:** hiển thị ảnh gouache đúng page_id, chiếm phần lớn diện tích trang, rõ nét, không crop mất nhân vật hoặc hành động quan trọng.
-- **Trang phải:** sử dụng background PNG đã xuất từ bộ background PDF; đặt tiêu đề/chương và lời dẫn tiếng Việt lên trên bằng HTML/CSS.
-- Hai trang có cùng chiều cao, cân đối như một spread mở; ở giữa có gáy sách và bóng đổ nhẹ.
-- Có độ dày giấy ở cạnh ngoài, bóng trang và chi tiết bo cong tinh tế.
-- Sách phải đủ lớn để người đọc đọc thoải mái trên màn hình laptop; không thu nhỏ thành một tấm thiệp nhỏ giữa vùng trắng.
-- Nền xung quanh chỉ hỗ trợ cuốn sách, không biến giao diện thành dashboard hoặc trang landing page nhiều thẻ.
-
-### Cảm giác lật sách thật — KHÔNG PHẢI SLIDE
-Bắt buộc tạo hiệu ứng lật trang có chiều sâu:
-- Trang phải cong/cuộn qua gáy sách với perspective 3D.
-- Có bóng đổ thay đổi theo góc lật, thấy được mặt trước/mặt sau giấy trong lúc chuyển.
-- Có độ dày và cạnh giấy; chuyển động có gia tốc/deceleration tự nhiên.
-- Có thể dùng PageFlip/StPageFlip nếu thư viện phù hợp đã được tích hợp/vendored; nếu không, tự làm hiệu ứng CSS 3D/JavaScript đủ thuyết phục.
-- Lật bằng bấm vào góc trang, nút trước/sau, phím mũi tên và vuốt trên touch.
-- Chuyển từ một spread sang spread tiếp theo bằng hiệu ứng lật một lá sách.
-- Không dùng fade đơn thuần, slide ngang, chuyển cảnh toàn màn hình, zoom-to-next hoặc mỗi trang hiện như một slide PowerPoint.
-- Không dùng layout dạng carousel/card deck.
-- Khi lật, cuốn sách vẫn ở vị trí trung tâm; không phóng to/thu nhỏ hoặc nhảy bố cục.
-
-### Typography — SỬA DỨT ĐIỂM LỖI FONT NHỎ VÀ KIỂU WORD
-Typography phải có cảm giác sách truyện được biên tập và thiết kế, không giống văn bản Word.
-
-Dùng cặp font có hỗ trợ tiếng Việt:
-- **Lời dẫn:** ưu tiên Lora hoặc Literata (serif giàu chất sách, dễ đọc).
-- **Tiêu đề chương/trang:** ưu tiên Be Vietnam Pro hoặc một display typeface có đủ dấu tiếng Việt.
-- Có thể dùng một font display giàu cá tính cho tiêu đề lớn, nhưng tuyệt đối không dùng font thiếu ký tự tiếng Việt.
-- Nếu license cho phép, lưu font local trong `reader/assets/fonts/` và nhúng bằng @font-face để chạy offline. Không dùng font không rõ license.
-- Nếu không thể đóng gói font, dùng fallback serif đẹp như Georgia/Noto Serif cho lời dẫn và sans-serif rõ ràng cho tiêu đề; không để trình duyệt rơi về font mặc định xấu.
-
-Kích thước tối thiểu trên desktop:
-- Tiêu đề trang: **28–36 px**, có phân cấp rõ.
-- Lời dẫn: **20–23 px**, line-height khoảng **1.55–1.7**.
-- Nhãn chương và số trang: **13–15 px**, không làm nhỏ hơn mức dễ đọc.
-- Nội dung key points/phản tư: **17–19 px**, có khoảng cách dòng và khoảng cách đoạn.
-- Không để một trang có chữ dày đặc; dùng phân cấp, khoảng trắng và nhấn chữ có chọn lọc.
-
-Trên màn hình nhỏ:
-- Lời dẫn không thấp hơn 17–18 px.
-- Có thể chuyển sang chế độ đọc một trang mỗi lần theo dạng cuốn sách khép/mở trên mobile, nhưng không được biến thành slide; vẫn giữ cảm giác trang giấy và hiệu ứng lật.
-- Không để chữ bị cắt, tràn ra ngoài hoặc bắt người đọc cuộn trong một trang nhỏ.
-
-### Trang phải hiển thị nội dung gì?
-- Lấy nguyên văn tiêu đề và lời dẫn trong STORY_PAGES.md.
-- Mỗi lời dẫn phải đi với đúng ảnh có cùng page_id.
-- Trang quyết định: hiển thị câu hỏi và hai lựa chọn ở trang phải bằng control HTML đẹp, dễ bấm; không vẽ lựa chọn vào ảnh.
-- Trang phản tư: hiển thị các key points và câu hỏi phản tư, vẫn dùng typography sách truyện.
-- Trang kết thúc: hiển thị nội dung kết thúc tương ứng.
-- Không được viết lại lời dẫn thành văn phong máy móc hoặc rút ngắn làm mất ý.
-- Nếu phần phản tư nhiều chữ, dùng bố cục có phân cấp, nhưng giữ mọi nội dung học tập; không làm chữ quá nhỏ.
-
-### Tương tác nhánh — GIỮ LOGIC CỦA TRUYỆN
-- Giữ nguyên lựa chọn SAFE/EXPLORE của 4 chương.
-- Khi người đọc chọn SAFE ở trang quyết định, cuốn sách lật đến đúng trang hệ quả SAFE.
-- Khi chọn EXPLORE, lật đến đúng trang hệ quả EXPLORE.
-- Sau trang hệ quả, tiếp tục đến trang phản tư tương ứng.
-- Giữ chỉ số CSS/DES và nhật ký quyết định như logic nguồn.
-- Cho phép quay lại hoặc chọn thử nhánh còn lại (Replay) mà không làm mất trải nghiệm sách.
-- Ở chương cuối, xác định kết thúc dựa trên CSS/DES theo đúng điều kiện trong kịch bản; hiển thị đúng một trong bốn trang kết thúc.
-- Tất cả 28 tranh vẫn nằm trong bộ PDF đầy đủ, kể cả các nhánh thay thế, dù người đọc trong một lượt chơi chỉ đi qua nhánh đã chọn.
-
-### Điều khiển
-Tối giản, đặt ở ngoài mép sách hoặc sát mép dưới:
-- Trang trước / trang tiếp.
-- Chỉ báo Chương x/4 và Trang x/28.
-- Âm thanh lật giấy có thể bật/tắt.
-- Nhật ký lựa chọn và nút thử nhánh khác nếu cần.
-Không để thanh công cụ che mất tranh hoặc chữ.
-
----
-
-## 9. GIAI ĐOẠN 6 — KIỂM TRA TỔNG THỂ
-
-### Kiểm tra ảnh
-- [ ] Có đủ 28 PNG truyện, mỗi page_id một ảnh.
-- [ ] Nhân vật đúng, hành động đúng, phong cách Gouache thống nhất.
-- [ ] Không có chữ, bong bóng thoại, panel, collage hoặc watermark.
-- [ ] Không có ảnh trùng lặp hay placeholder.
+### Quy tắc PDF tranh
+- Đúng **28 trang PDF**.
+- Trang PDF 1 là CH01-P001.
+- Trang PDF cuối là CH04-P010.
+- Thứ tự theo danh sách page_id ở Mục 2.
+- Một trang PDF chứa một ảnh duy nhất, full bleed trong vùng an toàn, không chữ.
+- Không thêm bìa, lời dẫn, tiêu đề, số trang hoặc ghi chú.
+- Giữ ảnh đúng tỷ lệ 4:5, không kéo giãn.
+- Giữ chất lượng cao, không nén mờ/nhòe.
+- Có thể thêm lề trắng rất nhỏ nếu cần để tránh cắt tranh, nhưng ưu tiên trang ảnh full-page.
 
 ### Kiểm tra PDF
-- [ ] `Gouache_Illustrations_28_Pages.pdf` mở được, đúng 28 trang, mỗi trang một tranh.
-- [ ] `Gouache_Right_Page_Backgrounds_28_Pages.pdf` mở được, đúng 28 trang, background không có chữ.
-- [ ] Thứ tự PDF khớp page_id.
-- [ ] PDF không bị kéo méo hoặc giảm chất lượng quá mức.
-
-### Kiểm tra website
-- [ ] `reader/index.html` mở được bằng local server.
-- [ ] Sách nằm chính giữa trang.
-- [ ] Trang trái hiện đúng ảnh; trang phải hiện đúng background và lời dẫn tương ứng.
-- [ ] Font hiển thị đầy đủ dấu tiếng Việt, không lỗi ký tự.
-- [ ] Cỡ chữ lớn, đọc thoải mái, không giống trang Word.
-- [ ] Lật trang có hiệu ứng cong/lật giấy 3D, không phải slide/fade.
-- [ ] Lựa chọn SAFE/EXPLORE đi đến đúng hệ quả.
-- [ ] CSS/DES và kết thúc hoạt động đúng.
-- [ ] Không có đường dẫn ảnh hỏng hoặc lỗi console nghiêm trọng.
-- [ ] Chạy được offline/local theo hướng dẫn.
-
-### Kiểm tra đồng bộ
-- [ ] Ảnh trái và lời dẫn phải cùng page_id.
-- [ ] Background trang phải có cùng page_id với spread tương ứng.
-- [ ] Số tranh = 28; số trang background = 28; số spread truyện = 28.
-- [ ] PDF tranh và PDF background có số trang bằng nhau.
-- [ ] STORY_PAGES.md không bị thay đổi nội dung gốc.
+- Mở PDF và xem ít nhất trang 1, 2, 3, 12, 18, 24 và 28.
+- Xác nhận đúng số trang bằng công cụ đọc PDF metadata hoặc PDF reader.
+- Đối chiếu page_id với ảnh nguồn.
+- Nếu PDF sai thứ tự hoặc thiếu trang, phải xuất lại.
 
 ---
 
-## 10. CẤU TRÚC FILE ĐẦU RA BẮT BUỘC
+## 7. GIAI ĐOẠN C — TẠO MỘT BACKGROUND DÙNG CHUNG CHO TRANG BÊN PHẢI
 
-Giữ nguyên tài liệu đã có, bổ sung theo cấu trúc:
+Chỉ bắt đầu sau khi PDF tranh bên trái đã hoàn thành.
+
+Người dùng muốn **một nền trang phải duy nhất dùng chung cho toàn bộ 28 trang**. Vì vậy chỉ tạo **01 background master**, không tạo 28 background khác nhau.
+
+### 7.1. Ngôn ngữ thiết kế background
+- Nền giấy sách màu warm ivory/cream theo ảnh mẫu.
+- Texture giấy gouache rất nhẹ, matte, có hạt giấy tinh tế.
+- Ở vùng mép hoặc góc có các mảng wash màu sage/xanh xám, ochre/vàng đất và nâu ấm thật nhẹ.
+- Có thể có một viền mảnh hữu cơ hoặc vài nét cọ trang trí nhỏ ở rìa ngoài.
+- Background phải đồng điệu với tranh trái nhưng nhẹ hơn, ít chi tiết hơn và không cạnh tranh với chữ.
+- Vùng trung tâm dành cho lời dẫn phải sạch, sáng, tương phản tốt.
+- Giữ khoảng trống an toàn tối thiểu 75–80% diện tích trang để hệ thống sau này đặt tiêu đề và lời dẫn.
+- Bố cục tinh tế như giấy trang sách minh họa, không giống mẫu PowerPoint, trang Word, giấy chứng nhận hoặc slide học tập.
+
+### 7.2. Những thứ TUYỆT ĐỐI KHÔNG có trên background
+- Không chữ, không tiêu đề, không lời dẫn, không số trang.
+- Không thoại, không speech bubble.
+- Không nhân vật, không chân dung, không tranh minh họa chính.
+- Không icon lớn, biểu tượng công nghệ lớn hoặc infographic.
+- Không watermark, logo hoặc đường dẫn.
+- Không có họa tiết đậm ở giữa trang.
+- Không tạo các vùng trang trí làm giảm độ đọc của chữ.
+
+### 7.3. Định dạng
+Tạo background 4:5 dọc, độ phân giải mục tiêu 2000 × 2500 px hoặc cao hơn.
+
+Lưu file PNG nguồn:
+`09_Storybook_Outputs/gouache/assets/backgrounds/right-page-background.png`
+
+### 7.4. PDF background riêng
+Tên file bắt buộc:
+`09_Storybook_Outputs/gouache/pdf/Gouache_Right_Page_Background_Master.pdf`
+
+PDF này phải có **đúng 01 trang duy nhất**. Đây là background mẫu để hệ thống web/agent frontend dùng lại cho tất cả 28 trang bên phải. Không lặp 28 bản giống nhau trong PDF. Không ghép với PDF tranh trái.
+
+---
+
+## 8. PHẠM VI KHÔNG ĐƯỢC LÀM — MUSE KHÔNG PHỤ TRÁCH WEBSITE
+
+Sau khi hoàn thành hai PDF, dừng ở bàn giao sản phẩm hình ảnh.
+
+**KHÔNG thực hiện các việc sau:**
+- Không tạo hoặc chỉnh sửa `index.html`.
+- Không tạo hoặc chỉnh sửa CSS/JavaScript.
+- Không tạo flipbook engine.
+- Không làm hiệu ứng lật trang 3D/2D.
+- Không làm slide transition, carousel hoặc animation.
+- Không thiết kế giao diện sách hai trang.
+- Không tạo nút điều hướng, nút chọn SAFE/EXPLORE hoặc logic chấm điểm.
+- Không sửa `05_Web_Truyen_Tuong_Tac/`.
+- Không viết lại thoại, không viết lại lời dẫn, không tạo nội dung truyện mới.
+- Không ghép lời dẫn vào background PDF hoặc tranh PDF.
+
+Những việc này thuộc trách nhiệm của agent phát triển website ở giai đoạn sau.
+
+---
+
+## 9. CẤU TRÚC ĐẦU RA
+
+Giữ nguyên các tài liệu có sẵn. Bổ sung file ảnh/PDF như sau:
 
 ```
 09_Storybook_Outputs/gouache/
-├── MUSE_EXECUTION_PROMPT_GOUACHE_BOOK_LAYOUT.md
-├── STORY_PAGES.md
-├── IMAGE_PROMPTS.md
-├── CHARACTER_STYLE_SHEETS.md
-├── VISUAL_STYLE_OVERRIDE.md
-├── ASSET_MANIFEST.md
-├── QA_REPORT.md
-├── PRODUCTION_LOG.md
+├── STORY_PAGES.md                  # Chỉ đọc, giữ nguyên
+├── IMAGE_PROMPTS.md                # Có thể cập nhật prompt hình nếu cần, không sửa truyện
+├── CHARACTER_STYLE_SHEETS.md       # Bổ sung reference/canon khi cần
+├── ASSET_MANIFEST.md               # Cập nhật trạng thái file thật
+├── QA_REPORT.md                    # Ghi QA thực tế
+├── PRODUCTION_LOG.md               # Nhật ký công việc
 ├── assets/
-│   ├── cover.png
-│   ├── characters/
-│   │   ├── minh-reference.png
-│   │   ├── an-reference.png
-│   │   ├── hoang-reference.png
-│   │   ├── chi-reference.png
-│   │   ├── cyberfox-reference.png
-│   │   └── teacher-tuan-reference.png
+│   ├── characters/                 # Reference nhân vật, không đưa vào PDF
 │   ├── pages/
 │   │   ├── CH01-P001.png
 │   │   ├── CH01-P002.png
 │   │   └── ... CH04-P010.png
-│   └── right-backgrounds/
-│       ├── CH01-P001.png
-│       ├── CH01-P002.png
-│       └── ... CH04-P010.png
-├── pdf/
-│   ├── Gouache_Illustrations_28_Pages.pdf
-│   └── Gouache_Right_Page_Backgrounds_28_Pages.pdf
-└── reader/
-    ├── index.html
-    ├── css/
-    ├── js/
-    └── assets/
-        └── fonts/
+│   └── backgrounds/
+│       └── right-page-background.png
+└── pdf/
+    ├── Gouache_Left_Illustrations_28_Pages.pdf
+    └── Gouache_Right_Page_Background_Master.pdf
 ```
 
-Có thể bổ sung file phụ cần thiết, nhưng không đổi tên hai PDF đầu ra bắt buộc và không đặt tất cả vào một PDF duy nhất.
+**Hai PDF trên là hai sản phẩm bàn giao chính thức.** PNG nguồn và character references chỉ là asset kỹ thuật để kiểm tra, sửa và tái sử dụng.
 
 ---
 
-## 11. GIT — CHỈ LÀM VIỆC TRÊN NHÁNH GOUACHE SỐ 03
+## 10. KIỂM TRA VÀ BÀN GIAO
 
-- Tiếp tục làm trên branch hiện có: `muse/storybook-03-gouache`.
+### QA tranh trái
+- [ ] Có 28 ảnh PNG thực tế.
+- [ ] Đúng 28 page_id và đúng thứ tự.
+- [ ] Mỗi ảnh kể đúng cảnh khớp với lời dẫn tương ứng.
+- [ ] Nhân vật là học sinh THPT, không bị trẻ hóa.
+- [ ] Đúng chất liệu và palette theo ảnh mẫu.
+- [ ] Không chữ, không thoại, không logo, không watermark, không panel.
+- [ ] Không có ảnh lặp/placeholder.
+
+### QA PDF trái
+- [ ] PDF mở được.
+- [ ] Có đúng 28 trang.
+- [ ] Trang 1 khớp CH01-P001.
+- [ ] Trang 28 khớp CH04-P010.
+- [ ] Thứ tự không bị đảo.
+- [ ] Không có văn bản.
+
+### QA background phải
+- [ ] Một background master duy nhất.
+- [ ] Đúng palette sage/ivory/ochre/warm brown.
+- [ ] Trung tâm sáng, sạch, đủ chỗ đặt lời dẫn.
+- [ ] Không có chữ, nhân vật hoặc tranh.
+- [ ] Có PNG nguồn.
+
+### QA PDF background
+- [ ] PDF mở được.
+- [ ] Chính xác 01 trang.
+- [ ] Đúng tỷ lệ 4:5.
+- [ ] Không chứa lời dẫn hoặc tiêu đề.
+
+### Cập nhật tài liệu
+Cập nhật:
+- `ASSET_MANIFEST.md`: chỉ đánh dấu generated nếu file thật tồn tại.
+- `QA_REPORT.md`: số ảnh, số trang PDF, kết quả kiểm tra thật.
+- `PRODUCTION_LOG.md`: các bước đã thực hiện và vấn đề còn tồn tại.
+
+Không dùng con số do manifest cũ khai báo nếu file thực tế không có. Không báo hoàn thành hai PDF khi chưa mở kiểm tra được chúng.
+
+### Git
+- Chỉ commit lên branch `muse/storybook-03-gouache`.
 - Không tạo branch mới.
-- Không push vào main.
-- Không ghi đè hoặc sửa nội dung của 9 phong cách khác.
-- Commit các ảnh, PDF, HTML và Markdown đã hoàn thành lên đúng branch này.
-- Trước khi push, kiểm tra file binary đã được Git lưu thật, không chỉ có manifest.
-- Cập nhật README.md, ASSET_MANIFEST.md, QA_REPORT.md và PRODUCTION_LOG.md theo trạng thái thực tế.
+- Không push lên main.
+- Không sửa nhánh/phong cách số 01, 02 hoặc 04–10.
+- Commit ảnh PNG nguồn, hai PDF và tài liệu QA lên branch hiện tại.
+- Sau khi push, cung cấp đường dẫn trực tiếp tới hai PDF và commit SHA.
 
-## 12. BÁO CÁO KẾT QUẢ — KHÔNG ĐƯỢC BÁO KHỐNG
+---
 
-Sau khi hoàn tất, báo cáo:
-1. Branch URL và commit SHA.
-2. Số ảnh truyện PNG thực tế đã tạo / tổng 28.
-3. Số character reference thực tế.
-4. Link PDF tranh 28 trang.
-5. Link PDF background trang phải 28 trang.
-6. Link `reader/index.html` và cách mở.
-7. Kết quả kiểm tra hiệu ứng lật sách, typography, tiếng Việt và logic nhánh.
-8. Những phần còn pending (nếu có).
+## 11. KẾT QUẢ CUỐI CÙNG CẦN TRẢ VỀ
 
-Chỉ đánh dấu DONE khi ảnh, hai PDF và HTML đều tồn tại, mở được, kiểm tra được. Nếu một công cụ không hỗ trợ tạo file PDF hoặc ảnh, hãy nói rõ giới hạn và dừng ở trạng thái tương ứng; không tạo file giả, không đánh dấu generated, không tuyên bố hoàn thành.
+Chỉ báo cáo hoàn tất khi cả hai file PDF đã tồn tại thật, mở được và đã kiểm tra.
 
-**BẮT ĐẦU NGAY TRÊN BRANCH `muse/storybook-03-gouache`: kiểm kê file thật → tạo reference nhân vật → tạo từng tranh trang trái → PDF tranh → background trang phải → PDF background → HTML sách lật ở chính giữa trang.**
+Báo cáo theo mẫu:
+
+| Sản phẩm | Đường dẫn GitHub | Số trang | Trạng thái |
+|---|---|---:|---|
+| PDF tranh trái | `pdf/Gouache_Left_Illustrations_28_Pages.pdf` | 28 | Generated / Pending |
+| PDF background phải | `pdf/Gouache_Right_Page_Background_Master.pdf` | 1 | Generated / Pending |
+
+Kèm:
+- Số PNG minh họa thực tế đã sinh / 28.
+- Số character reference đã tạo.
+- Xác nhận đúng palette ảnh mẫu.
+- Xác nhận PDF tranh không có chữ.
+- Xác nhận PDF background là một trang trống dùng chung.
+- Branch URL và commit SHA.
+- Những việc còn pending nếu có.
+
+**BẮT ĐẦU NGAY:** kiểm kê file thật → đọc nội dung 28 trang → khóa nhân vật → tạo lần lượt 28 tranh gouache trang trái → xuất PDF 28 trang → tạo một background trang phải → xuất PDF background 1 trang → QA → push lên đúng branch. Sau đó dừng, không làm website hoặc hiệu ứng tương tác.
