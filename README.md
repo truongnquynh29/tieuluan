@@ -103,3 +103,25 @@ tieuluan/
 
 ### 3.4. Dành cho các AI Agents tiếp quản dự án:
 Mỗi ngăn đều được trang bị tệp `PROMPT_*.md` tương ứng. Đọc tệp tổng quan tại `07_Agent_Prompts_Va_Cong_Cu/SYSTEM_AGENT_ORCHESTRATION.md` để hiểu chuỗi mắt xích công việc.
+
+
+---
+
+## 4. WORKFLOW TẠO TRUYỆN VÀ MINH HỌA ĐA AGENT
+
+Hệ thống tạo truyện mới được chuẩn hóa tại:
+- [Quy tắc agent](AGENTS.md)
+- [Workflow tạo truyện](07_Agent_Prompts_Va_Cong_Cu/STORY_CREATION_WORKFLOW.md)
+- [Visual Style Bible](07_Agent_Prompts_Va_Cong_Cu/VISUAL_STYLE_BIBLE.md)
+- [Character Bible](07_Agent_Prompts_Va_Cong_Cu/CHARACTER_BIBLE.md)
+- [Template một trang truyện](07_Agent_Prompts_Va_Cong_Cu/STORY_PAGE_TEMPLATE.md)
+- [Khảo sát skill GitHub](07_Agent_Prompts_Va_Cong_Cu/SKILL_RESEARCH_AND_REFERENCES.md)
+
+Các skill portable đặt tại `.agents/skills/`. Quy tắc bố cục bắt buộc: mỗi trang có một lời dẫn tiếng Việt ở đầu trang và đúng một tranh minh họa đơn cảnh ở dưới; lựa chọn tương tác (nếu có) do giao diện dựng riêng, không nằm trong ảnh.
+
+
+---
+
+## 5. MUSE AI — 10 PHIÊN BẢN TRUYỆN CÙNG NỘI DUNG
+
+Thư mục [08_Muse_Storybook_Prompts/](08_Muse_Storybook_Prompts/README.md) chứa 10 prompt Markdown, mỗi prompt khóa một phong cách minh họa riêng. Dùng [MASTER_PROMPT_MUSE.md](08_Muse_Storybook_Prompts/MASTER_PROMPT_MUSE.md) để yêu cầu Muse AI tạo 10 branch độc lập, mỗi branch là một phiên bản sách truyện. Nội dung, lời dẫn tiếng Việt, nhân vật, nhánh lựa chọn, hệ quả và kết thúc phải giống nhau; chỉ phong cách minh họa thay đổi.

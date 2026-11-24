@@ -49,3 +49,27 @@ Khi bạn muốn giao việc cho một mô hình AI mới (ví dụ: Claude, Cha
 2. Sao chép phần Master Prompt của Agent tương ứng với công việc bạn cần làm.
 3. Dán vào ô chat của AI đó kèm theo yêu cầu cụ thể của bạn.
 4. AI sẽ lập tức đóng vai chuyên gia tương ứng và tuân thủ 100% các quy tắc của dự án.
+
+
+---
+
+## 4. STORY CREATION WORKFLOW VÀ SKILLS
+
+Đọc [STORY_CREATION_WORKFLOW.md](STORY_CREATION_WORKFLOW.md) để chạy pipeline từ brief, kiểm chứng kiến thức, concept, outline, character/style bible, lời dẫn, storyboard, prompt ảnh đến QA.
+
+Tài liệu quy chuẩn:
+- [VISUAL_STYLE_BIBLE.md](VISUAL_STYLE_BIBLE.md): nét vẽ, palette, ánh sáng, bố cục và negative prompt.
+- [CHARACTER_BIBLE.md](CHARACTER_BIBLE.md): hồ sơ ngoại hình và continuity của nhân vật.
+- [STORY_PAGE_TEMPLATE.md](STORY_PAGE_TEMPLATE.md): cấu trúc một trang, một lời dẫn và một tranh.
+- [SKILL_RESEARCH_AND_REFERENCES.md](SKILL_RESEARCH_AND_REFERENCES.md): mẫu skill và chuẩn Agent Skills.
+
+Skills trong `.agents/skills/`:
+- story-planner
+- story-writer-vi
+- page-storyboard
+- character-canon
+- illustration-art-director
+- visual-consistency-review
+- educational-story-review
+
+Mỗi agent chỉ nạp skill phù hợp nhiệm vụ. AGENTS.md và workflow có độ ưu tiên cao hơn skill khi có xung đột.

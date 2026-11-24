@@ -56,3 +56,30 @@ Pedagogy Agent soạn KHBD chuẩn 5512, phiếu học tập và Rubric đánh g
    -> **Quy tắc ưu tiên:** Sự đơn giản, trực quan, mượt mà và khả năng chạy offline không giật lag trên máy tính học sinh là ưu tiên cao nhất của `Frontend Agent`.
 3. **Khi cần mở rộng thêm tình huống mới:**  
    -> Bắt buộc phải đi qua đủ quy trình: IF Designer dựng nhánh -> Story Writer viết kịch bản -> Frontend số hóa -> Pedagogy Agent cập nhật phiếu học tập.
+
+
+---
+
+## 4. PIPELINE SÁNG TÁC VÀ MINH HỌA MỚI
+
+Đối với mọi truyện/chương mới, áp dụng pipeline có gate phê duyệt tại STORY_CREATION_WORKFLOW.md:
+1. Orchestrator tiếp nhận brief và phạm vi.
+2. Research/Curriculum xác minh kiến thức và mục tiêu.
+3. Story Planner tạo concept, outline và nhánh.
+4. Character Designer/Art Director khóa Character Bible và Visual Style Bible; tạo ảnh mẫu để duyệt.
+5. Story Writer viết lời dẫn tiếng Việt cho từng trang.
+6. Storyboard Designer lập page card.
+7. Illustration Director tạo một prompt cho một ảnh ở mỗi trang.
+8. Visual Reviewer và Educational Reviewer kiểm tra trước khi Frontend Agent tích hợp.
+
+### Skills cần nạp
+- Story Planner: story-planner.
+- Story Writer: story-writer-vi.
+- Storyboard Designer: page-storyboard.
+- Character Designer: character-canon.
+- Illustration Director: illustration-art-director.
+- Visual Reviewer: visual-consistency-review.
+- Educational Reviewer: educational-story-review.
+
+### Quy tắc đầu ra trang
+Một trang = một lời dẫn/thuyết minh tiếng Việt ở đầu trang + đúng một tranh minh họa đơn cảnh bên dưới. Không chữ/bong bóng thoại/panel/collage trong tranh. Nút tương tác (nếu có) do giao diện dựng độc lập.

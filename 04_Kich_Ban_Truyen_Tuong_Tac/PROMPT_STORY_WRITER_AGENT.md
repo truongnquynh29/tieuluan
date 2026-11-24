@@ -32,3 +32,19 @@ Hãy viết lời thoại kịch tính giữa Minh và An tại quán trà sữa
 3. Tùy chọn Khám phá: Minh tò mò kết nối Wi-Fi lạ, bấm vào link để xem "thuật toán voucher" hoạt động thế nào.
 Viết rõ cảm xúc nhân vật, hình ảnh minh họa đề xuất và hệ quả tức thì trên màn hình điện thoại.
 ```
+
+
+---
+
+## 4. QUY CHUẨN MỚI — LỜI DẪN Ở ĐẦU TRANG, MỘT TRANH Ở BÊN DƯỚI
+
+Các quy tắc dưới đây là chuẩn ưu tiên cho trang truyện mới, thay thế cách trình bày cũ thiên về danh sách thoại 150–250 từ:
+
+1. Mỗi trang chỉ có một đoạn lời dẫn/thuyết minh tiếng Việt ở phần đầu, mặc định 35–65 từ (2–4 câu).
+2. Bên dưới lời dẫn là đúng một tranh minh họa đơn cảnh duy nhất.
+3. Không viết trang như danh sách speaker/dialogue và không yêu cầu vẽ bong bóng thoại. Có thể lồng một câu trích dẫn ngắn trong lời dẫn khi cần.
+4. Không đặt chữ, tiêu đề, phụ đề, URL, logo, watermark hoặc chữ giả vào ảnh. Chữ cần đọc nằm trong lời dẫn hoặc giao diện.
+5. Với trang có điểm rẽ, ghi lựa chọn như dữ liệu giao diện tách riêng; không tạo tranh riêng cho từng nhánh ở cùng trang.
+6. Đọc AGENTS.md, STORY_CREATION_WORKFLOW.md, VISUAL_STYLE_BIBLE.md, CHARACTER_BIBLE.md và dùng skill phù hợp trong `.agents/skills/`.
+7. Không tự đổi thiết kế nhân vật/phong cách. Dùng đúng reference đã duyệt và lặp lại đặc điểm canon trong prompt của từng ảnh.
+8. Tông giọng THPT: vui vẻ, tự nhiên, dí dỏm vừa phải, có chiều sâu; tránh giáo điều, tiếng lóng dày hoặc làm xấu hổ nhân vật.
