@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Người Gác Đền Không Gian Số - Pixel Art 16-Bit Storybook</title>
+    <meta name="description" content="Trình chiếu truyện tương tác phiên bản Pixel Art 16-bit chuẩn Storybook Muse - Nhánh muse/storybook-07-pixel-art.">
+    <link rel="stylesheet" href="css/pixel_art.css">
+    <!-- Favicon Pixel -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body class="scanlines">
+
+    <!-- ========================================================
+         HUD BAR (GAME STATUS BAR PHONG CÁCH RPG 16-BIT)
+         ======================================================== -->
+    <header class="pixel-hud">
+        <div class="hud-container">
+            <div class="hud-title-wrap">
+                <span class="hud-logo-icon">👾</span>
+                <div>
+                    <h1 class="hud-title">NGƯỜI GÁC ĐỀN KHÔNG GIAN SỐ</h1>
+                    <p class="hud-subtitle">PIXEL ART 16-BIT EDITION • MUSE BRANCH</p>
+                </div>
+            </div>
+
+            <!-- Đồng hồ đo chỉ số An toàn & Đạo đức -->
+            <div class="hud-meters">
+                <!-- Thanh CSS (Cyber Safety) -->
+                <div class="hud-meter-box" title="Chỉ số An toàn thông tin">
+                    <div class="meter-label">
+                        <span class="label-css">🛡️ CSS (AN TOÀN)</span>
+                        <span id="cssValue" class="label-css">50/100</span>
+                    </div>
+                    <div class="pixel-bar-track">
+                        <div class="pixel-bar-fill fill-css" id="cssFill" style="width: 50%;"></div>
+                    </div>
+                </div>
+
+                <!-- Thanh DES (Digital Ethics) -->
+                <div class="hud-meter-box" title="Chỉ số Đạo đức số & Khám phá">
+                    <div class="meter-label">
+                        <span class="label-des">💡 DES (ĐẠO ĐỨC)</span>
+                        <span id="desValue" class="label-des">50/100</span>
+                    </div>
+                    <div class="pixel-bar-track">
+                        <div class="pixel-bar-fill fill-des" id="desFill" style="width: 50%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Các nút điều khiển Retro -->
+            <div class="hud-controls">
+                <button class="pixel-btn" id="btnSound">SOUND: ON</button>
+                <button class="pixel-btn" id="btnScanlines">CRT: ON</button>
+                <button class="pixel-btn pixel-btn-gold" id="btnSwitchStyle" title="Chuyển sang chế độ sách lật 3D hiện đại">📖 CHẾ ĐỘ SÁCH LẬT</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         KHUNG TRÌNH CHIẾU ARCADE SCREEN CABINET
+         ======================================================== -->
+    <main class="game-viewport">
+        <div class="arcade-screen-frame">
+            <!-- Nửa trên: Tranh Pixel Art 16-bit -->
+            <div class="pixel-canvas-stage">
+                <div class="scene-tag-badge" id="sceneBadge">STORY</div>
+                <div class="scene-location-badge" id="locationBadge">CH01</div>
+                
+                <div class="pixel-illustration-box" id="pixelCanvasSlot">
+                    <!-- Tranh vẽ Pixel Art 16-bit SVG render động -->
+                </div>
+            </div>
+
+            <!-- Nửa dưới: Hộp thoại Visual Novel RPG -->
+            <div class="pixel-dialogue-panel">
+                <div class="dialogue-header-row">
+                    <span class="dialogue-speaker" id="speakerName">Buổi chiều tại quán Star-Tea</span>
+                    <span class="dialogue-page-id" id="pageIdText">CH01-P001 (1/28)</span>
+                </div>
+
+                <!-- Đoạn lời dẫn chuẩn 35-65 từ của Storybook -->
+                <div class="dialogue-text-body" id="dialogueText">
+                    Đang tải cốt truyện Pixel Art...
+                </div>
+
+                <!-- Bảng lựa chọn tương tác nhánh (Chỉ hiện ở trang Decision) -->
+                <div class="decision-panel" id="decisionPanel" style="display: none;">
+                    <!-- Nạp động câu hỏi và 2 lựa chọn SAFE / EXPLORE -->
+                </div>
+
+                <!-- Thanh điều hướng dưới cùng của Hộp thoại -->
+                <div class="bottom-nav-bar">
+                    <button class="pixel-btn" id="btnPrev">◀ PREV</button>
+                    <span class="nav-hint-text">[PHÍM MŨI TÊN TRÁI / PHẢI HOẶC SPACE ĐỂ LẬT TRANG • 1/2 ĐỂ CHỌN]</span>
+                    <button class="pixel-btn pixel-btn-gold" id="btnNext">NEXT ▶</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Nạp dữ liệu 28 trang Storybook và Engine Pixel Art -->
+    <script src="js/pixel_story_data.js"></script>
+    <script src="js/pixel_art_engine.js"></script>
+</body>
+</html>
