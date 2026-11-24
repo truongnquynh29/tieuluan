@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Người Gác Đền Không Gian Số - Truyện Tương Tác Lớp 11</title>
+    <meta name="description" content="Trang web truyện lật tương tác phân nhánh giáo dục An toàn thông tin và Đạo đức số cho học sinh lớp 11 - Chương trình GDPT 2018.">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Favicon SVG -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+    <!-- ========================================================
+         HEADER & THANH CHỈ SỐ KÉP THỜI GIAN THỰC
+         ======================================================== -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-icon">🛡️</span>
+                <div class="brand-text">
+                    <h1>NGƯỜI GÁC ĐỀN KHÔNG GIAN SỐ</h1>
+                    <p>Truyện lật tương tác • Tin học lớp 11 (GDPT 2018)</p>
+                </div>
+            </div>
+
+            <!-- Bảng theo dõi 2 chỉ số an toàn & đạo đức -->
+            <div class="metrics-dashboard">
+                <!-- Chỉ số An toàn thông tin (CSS) -->
+                <div class="metric-card" title="Chỉ số phản ánh kỹ năng bảo mật, mật khẩu, 2FA và phòng vệ mạng">
+                    <span class="metric-icon">🛡️</span>
+                    <div class="metric-info">
+                        <div class="metric-label-row">
+                            <span>An Toàn Số</span>
+                            <span class="metric-value safe-color" id="cssValue">50/100</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill safe-fill" id="cssProgress" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chỉ số Đạo đức số & Khám phá (DES) -->
+                <div class="metric-card" title="Chỉ số phản ánh tính liêm chính, tôn trọng bản quyền và ứng xử nhân văn">
+                    <span class="metric-icon">💡</span>
+                    <div class="metric-info">
+                        <div class="metric-label-row">
+                            <span>Đạo Đức Số</span>
+                            <span class="metric-value explore-color" id="desValue">50/100</span>
+                        </div>
+                        <div class="progress-track">
+                            <div class="progress-fill explore-fill" id="desProgress" style="width: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Các nút tiện ích Header -->
+            <div class="header-actions">
+                <button class="btn-icon" id="btnLog" title="Xem nhật ký các quyết định của bạn">📜</button>
+                <button class="btn-icon" id="btnSound" title="Bật/Tắt âm thanh hiệu ứng">🔊</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================
+         KHUNG CHÍNH CUỐN SÁCH LẬT TƯƠNG TÁC
+         ======================================================== -->
+    <main class="book-viewport">
+        <!-- Thanh điều hướng thông tin Chương & Trang -->
+        <div class="chapter-nav-bar">
+            <div class="current-chapter-info">
+                <h2 id="chapterTitle">Chương 1: Mắt bão Wi-Fi và Tin nhắn lạ</h2>
+                <p id="chapterTopic">Chủ đề B: Mạng máy tính & An toàn thông tin</p>
+            </div>
+            <div class="page-counter-badge" id="pageCounterBadge">
+                Chương 1/4 • Trang 1/5
+            </div>
+        </div>
+
+        <!-- Sân khấu lật sách 3D -->
+        <div class="book-stage">
+            <div class="book-wrapper" id="bookWrapper">
+                <!-- Bóng gáy sách ở giữa -->
+                <div class="book-spine-shadow"></div>
+
+                <div class="page-spread">
+                    <!-- TRANG TRÁI: HÌNH ẢNH MINH HỌA NGHỆ THUẬT -->
+                    <div class="page-side page-left">
+                        <div class="illustration-container">
+                            <div class="illustration-svg-wrap" id="illustrationSlot">
+                                <!-- SVG được render động từ book.js -->
+                            </div>
+                            <div class="illustration-caption" id="illustrationCaption">
+                                Minh họa tình huống học đường
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TRANG PHẢI: DIỄN BIẾN TRUYỆN, ĐIỂM RẼ & PHẢN TƯ -->
+                    <div class="page-side page-right">
+                        <div class="page-header-row">
+                            <span class="page-badge" id="pageBadgeText">Bối cảnh mở đầu</span>
+                            <span class="page-number-label">Lật để đọc tiếp ➔</span>
+                        </div>
+
+                        <h3 class="page-title" id="pageTitle">Buổi chiều tại quán Star-Tea</h3>
+
+                        <!-- Khu vực cuộn hiển thị thoại nhân vật -->
+                        <div class="story-scroll-area">
+                            <div class="dialogue-stream" id="dialogueStream">
+                                <!-- Lời thoại nhân vật render động -->
+                            </div>
+
+                            <!-- Lời dẫn tự sự -->
+                            <div class="narration-box" id="narrationBox" style="display: none;">
+                                <span id="narrationText"></span>
+                            </div>
+
+                            <!-- Khu vực Điểm rẽ tương tác (Hiển thị ở Trang 3) -->
+                            <div id="decisionArea" style="display: none;">
+                                <!-- Thẻ lựa chọn An toàn vs Khám phá -->
+                            </div>
+
+                            <!-- Khu vực Phản tư sư phạm (Hiển thị ở Trang 5 của Chương 1-3) -->
+                            <div id="reflectionArea" style="display: none;">
+                                <!-- Lời khuyên của CyberFox & Câu hỏi debriefing -->
+                            </div>
+
+                            <!-- Khu vực Màn hình Kết thúc (Hiển thị ở Trang 5 của Chương 4) -->
+                            <div id="endingArea" style="display: none;">
+                                <!-- Mở khóa 1 trong 4 Kết thúc đa chiều -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thanh điều khiển trang bên dưới cuốn sách -->
+        <div class="bottom-controls-bar">
+            <button class="btn-nav" id="btnPrev" title="Quay lại trang trước (Phím mũi tên Trái)">
+                ◀ Trang trước
+            </button>
+
+            <!-- Nút Tua lại: Thử lựa chọn khác khi đang ở Trang hệ quả -->
+            <button class="btn-nav btn-replay" id="btnReplay" style="display: none;" title="Thử nghiệm lựa chọn nhánh khác">
+                🔄 Thử lựa chọn khác (Replay)
+            </button>
+
+            <button class="btn-nav" id="btnNext" title="Lật sang trang tiếp (Phím mũi tên Phải)">
+                Trang tiếp ▶
+            </button>
+        </div>
+    </main>
+
+    <!-- ========================================================
+         MODAL NHẬT KÝ QUYẾT ĐỊNH (DECISION LOG)
+         ======================================================== -->
+    <div class="modal-overlay" id="modalLog">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>📜 Nhật Ký Quyết Định Của Bạn</h3>
+                <button class="btn-icon" id="btnCloseModal">✕</button>
+            </div>
+            <div class="modal-body" id="modalLogContent">
+                <!-- Danh sách các mốc lựa chọn đã chọn -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Nạp dữ liệu kịch bản và Engine tương tác -->
+    <script src="js/story_data.js"></script>
+    <script src="js/book.js"></script>
+</body>
+</html>
