@@ -118,3 +118,10 @@ Hệ thống tạo truyện mới được chuẩn hóa tại:
 - [Khảo sát skill GitHub](07_Agent_Prompts_Va_Cong_Cu/SKILL_RESEARCH_AND_REFERENCES.md)
 
 Các skill portable đặt tại `.agents/skills/`. Quy tắc bố cục bắt buộc: mỗi trang có một lời dẫn tiếng Việt ở đầu trang và đúng một tranh minh họa đơn cảnh ở dưới; lựa chọn tương tác (nếu có) do giao diện dựng riêng, không nằm trong ảnh.
+
+
+---
+
+## 5. MUSE AI — 10 PHIÊN BẢN TRUYỆN CÙNG NỘI DUNG
+
+Thư mục [08_Muse_Storybook_Prompts/](08_Muse_Storybook_Prompts/README.md) chứa 10 prompt Markdown, mỗi prompt khóa một phong cách minh họa riêng. Dùng [MASTER_PROMPT_MUSE.md](08_Muse_Storybook_Prompts/MASTER_PROMPT_MUSE.md) để yêu cầu Muse AI tạo 10 branch độc lập, mỗi branch là một phiên bản sách truyện. Nội dung, lời dẫn tiếng Việt, nhân vật, nhánh lựa chọn, hệ quả và kết thúc phải giống nhau; chỉ phong cách minh họa thay đổi.
